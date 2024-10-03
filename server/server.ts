@@ -1,15 +1,7 @@
 import express from "express";
 import cors from "cors";
-
-import { initTRPC } from "@trpc/server";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
-
-const t = initTRPC.create();
-const appRouter = t.router({
-  sayHi: t.procedure.query(() => {
-    return "Hello";
-  }),
-});
+import {appRouter} from "./routers"
 
 const app = express();
 app.use(cors({ origin: "http://localhost:5173" })); //goes before createExpressMiddleware
