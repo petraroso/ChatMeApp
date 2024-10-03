@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",              // Izlazni nivo JavaScript-a
+    "module": "commonjs",            // Modul sistem
+    "strict": true,                   // Aktivira stroga pravila
+    "esModuleInterop": true,          // Omogućava interoperabilnost između ESM i CommonJS
+    "skipLibCheck": true,             // Preskoči proveru tipova biblioteka
+    "forceConsistentCasingInFileNames": true // Prisiljava doslednost u imenima datoteka
+  },
+  "include": ["server.ts"],           // Uključuje server.ts datoteku
+  "exclude": ["node_modules"]         // Isključuje node_modules
+}
