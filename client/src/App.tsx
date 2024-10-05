@@ -2,11 +2,10 @@ import { client } from "./client";
 import { useState, useEffect } from "react";
 import type { Message } from "../../server/routers";
 import MessageBoard from "./components/MessageBoard";
+import SendMessage from "./components/SendMessage";
 
 function App() {
   const [messages, setMessages] = useState<Message[] | undefined>(undefined);
-
-  client.sendMessage.mutate({ text: "hiiiiiiiiii" });
 
   useEffect(() => {
     fetchMessages();
@@ -28,6 +27,7 @@ function App() {
   return (
     <>
       <MessageBoard messages={messages} />
+      <SendMessage />
     </>
   );
 }
