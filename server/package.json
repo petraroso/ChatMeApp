@@ -13,11 +13,13 @@
     "@trpc/server": "^10.45.2",
     "cors": "^2.8.5",
     "express": "^4.21.0",
+    "ws": "^8.18.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
+    "@types/ws": "^8.5.12",
     "nodemon": "^3.1.7",
     "ts-node": "^10.9.2"
   }
