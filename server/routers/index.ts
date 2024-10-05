@@ -5,8 +5,10 @@ export const appRouter = t.router({
   sayHi: t.procedure.query(() => {
     return "Hello";
   }),
-  logToServer: t.procedure.input(z.string()).mutation((req) => {
-    console.log(req.input);
-    return true;
-  }),
+  sendMessage: t.procedure
+    .input(z.object({ text: z.string() }))
+    .mutation((req) => {
+      console.log(req.input.text);
+      return true;
+    }),
 });
