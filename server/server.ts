@@ -14,6 +14,7 @@ const server = app.listen(3000, () => {
 });
 
 applyWSSHandler({
+  //allows websocket connections to trpc
   wss: new ws.Server({ server }), //web socket server
   router: appRouter,
 });

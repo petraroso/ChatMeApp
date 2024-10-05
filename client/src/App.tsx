@@ -6,11 +6,25 @@ import SendMessage from "./components/SendMessage";
 
 function App() {
   const [messages, setMessages] = useState<Message[] | undefined>(undefined);
-  const [messagesUpdate, setMessagesUpdate] = useState(false);
 
   useEffect(() => {
     fetchMessages();
-  }, [messagesUpdate]);
+  }, []);
+
+  useEffect(() => {
+    const subscription = client.onUpdate.subscribe(undefined, {
+      onData: (newMessage: Message) => {
+        //when new data comes
+        setMessages((prevMessages) =>
+          prevMessages ? [...prevMessages, newMessage] : [newMessage]
+        );
+      },
+    });
+    //when component unmounts:
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
 
   async function fetchMessages() {
     const result = await client.getAllMessages.query();
@@ -20,7 +34,7 @@ function App() {
   return (
     <>
       <MessageBoard messages={messages} />
-      <SendMessage setMessagesUpdate={setMessagesUpdate} />
+      <SendMessage />
     </>
   );
 }

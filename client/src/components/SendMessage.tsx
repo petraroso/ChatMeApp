@@ -1,11 +1,7 @@
 import { useState } from "react";
 import { client } from "../client";
 
-interface SendMessageProps {
-  setMessagesUpdate: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-function SendMessage({ setMessagesUpdate }: SendMessageProps) {
+function SendMessage() {
   const [text, setText] = useState("");
 
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -13,8 +9,11 @@ function SendMessage({ setMessagesUpdate }: SendMessageProps) {
   };
 
   const sendData = () => {
-    client.sendMessage.mutate({ text: text });
-    setMessagesUpdate((prev) => !prev);
+    //if it's not all just spaces
+    if (text.trim()) {
+      client.sendMessage.mutate({ text });
+      setText("");
+    }
   };
 
   return (

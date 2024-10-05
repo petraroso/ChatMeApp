@@ -25,11 +25,3 @@ export const client = createTRPCProxyClient<AppRouter>({
     }),
   ],
 });
-
-//input undefined because there is no data; onData listener passed and is
-//called every time emit.next is called
-client.onUpdate.subscribe(undefined, {
-  onData: (text) => {
-    console.log("Updated", text);
-  },
-});
