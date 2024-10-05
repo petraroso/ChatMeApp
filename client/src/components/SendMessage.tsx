@@ -18,7 +18,7 @@ function SendMessage() {
 
   return (
     <div>
-      <label htmlFor="name">Poruka:</label>
+      <label htmlFor="text">Poruka:</label>
       <input
         type="text"
         id="text"
