@@ -13,11 +13,17 @@ function App() {
 
   useEffect(() => {
     const subscription = client.onUpdate.subscribe(undefined, {
-      onData: (newMessage: Message) => {
+      onData: ({ type, message }) => {
         //when new data comes
-        setMessages((prevMessages) =>
-          prevMessages ? [...prevMessages, newMessage] : [newMessage]
-        );
+        if (type === "new") {
+          setMessages((prevMessages) =>
+            prevMessages ? [...prevMessages, message] : [message]
+          );
+        } else if (type === "delete") {
+          setMessages((prevMessages) =>
+            prevMessages?.filter((msg) => msg.id !== message.id)
+          );
+        }
       },
     });
     //when component unmounts:

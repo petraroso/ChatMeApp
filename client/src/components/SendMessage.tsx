@@ -10,7 +10,10 @@ function SendMessage() {
 
   const sendData = () => {
     //if it's not all just spaces
-    if (text.trim()) {
+    if (text.trim().startsWith("/oops")) {
+      client.deleteMessage.mutate();
+      setText("");
+    } else if (text.trim()) {
       client.sendMessage.mutate({ text });
       setText("");
     }

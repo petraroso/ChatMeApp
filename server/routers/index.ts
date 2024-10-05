@@ -19,26 +19,33 @@ export const appRouter = t.router({
   }),
   sendMessage: t.procedure
     .input(z.object({ text: z.string() }))
-    //.output(z.object({ id: z.number(), text: z.string() }))
     .mutation((req) => {
       const newMsg: Message = { id: Date.now(), text: req.input.text };
-      //console.log(`Klijent kaze: ${req.input.text}`);
       messages.push(newMsg);
       eventEmitter.emit("new-message", newMsg); //emitting new message
       return newMsg;
     }),
+  deleteMessage: t.procedure.mutation((req) => {
+    const deletedMessage = messages.pop(); //doesn't need checking if length >0
+    eventEmitter.emit("delete-message", deletedMessage);
+  }),
   onUpdate: t.procedure.subscription(() => {
     //listening for events
-    return observable<Message>((emit) => {
+    return observable<{ type: "new" | "delete"; message: Message }>((emit) => {
       const onMessage = (data: Message) => {
-        emit.next(data); // send the message to all subribers
+        emit.next({ type: "new", message: data }); // send the message to all subscribers
+      };
+      const onDeleteMessage = (data: Message) => {
+        emit.next({ type: "delete", message: data });
       };
 
       eventEmitter.on("new-message", onMessage); //listener for new messages
+      eventEmitter.on("delete-message", onDeleteMessage);
 
       return () => {
         //called when the connection is closed, listener removed
         eventEmitter.off("new-message", onMessage);
+        eventEmitter.off("delete-message", onDeleteMessage);
       };
     });
   }),
