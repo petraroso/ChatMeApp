@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { client } from "../client";
 
-function SendMessage() {
+interface SendMessageProps {
+  setMessagesUpdate: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function SendMessage({ setMessagesUpdate }: SendMessageProps) {
   const [text, setText] = useState("");
 
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -10,6 +14,7 @@ function SendMessage() {
 
   const sendData = () => {
     client.sendMessage.mutate({ text: text });
+    setMessagesUpdate((prev) => !prev);
   };
 
   return (

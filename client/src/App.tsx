@@ -6,10 +6,11 @@ import SendMessage from "./components/SendMessage";
 
 function App() {
   const [messages, setMessages] = useState<Message[] | undefined>(undefined);
+  const [messagesUpdate, setMessagesUpdate] = useState(false);
 
   useEffect(() => {
     fetchMessages();
-  }, []);
+  }, [messagesUpdate]);
 
   async function fetchMessages() {
     const result = await client.getAllMessages.query();
@@ -19,7 +20,7 @@ function App() {
   return (
     <>
       <MessageBoard messages={messages} />
-      <SendMessage />
+      <SendMessage setMessagesUpdate={setMessagesUpdate} />
     </>
   );
 }
