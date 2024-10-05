@@ -1,12 +1,16 @@
 import { client } from "./client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { Message } from "../../server/routers";
-
+import MessageBoard from "./components/MessageBoard";
 
 function App() {
-  const [messages, setMessages] = useState<Message[]>();
+  const [messages, setMessages] = useState<Message[] | undefined>(undefined);
 
   client.sendMessage.mutate({ text: "hiiiiiiiiii" });
+
+  useEffect(() => {
+    fetchMessages();
+  }, []);
 
   async function fetchMessages() {
     const result = await client.getAllMessages.query();
@@ -23,16 +27,7 @@ function App() {
 
   return (
     <>
-      <button onClick={() => fetchMessages()}>
-        Učitajte dosadašnje poruke
-      </button>
-      {messages &&
-        messages.map((msg, idx) => (
-          <div key={idx}>
-            <h4>Poruka od: {msg.id}</h4>
-            <div>{msg.text}</div>
-          </div>
-        ))}
+      <MessageBoard messages={messages} />
     </>
   );
 }
