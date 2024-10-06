@@ -9,7 +9,7 @@ function MessageBoard({ messages }: MessageBoardProps) {
       {messages &&
         messages.map((msg, idx) => (
           <div key={idx}>
-            <h4>Poruka od: {msg.id}</h4>
+            <h4>Poruka od: {msg.tabId}</h4>
             <div>{msg.text}</div>
           </div>
         ))}

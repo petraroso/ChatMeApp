@@ -11,7 +11,7 @@ function SendMessage({ tabId }: { tabId: string }) {
   const sendData = () => {
     //if it's not all just spaces
     if (text.trim().startsWith("/oops")) {
-      client.deleteMessage.mutate();
+      client.deleteMessage.mutate({ tabId: tabId });
       setText("");
     } else if (text.trim().startsWith("/nick")) {
       let nick = text.trim().substring(5);

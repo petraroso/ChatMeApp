@@ -40,10 +40,15 @@ export const appRouter = t.router({
       eventEmitter.emit("new-message", newMsg); //emitting new message
       return newMsg;
     }),
-  deleteMessage: t.procedure.mutation((req) => {
-    const deletedMessage = messages.pop(); //doesn't need checking if length >0
-    eventEmitter.emit("delete-message", deletedMessage);
-  }),
+  deleteMessage: t.procedure
+    .input(z.object({ tabId: z.string() }))
+    .mutation((req) => {
+      const filteredMessages = messages.filter(
+        (msg) => msg.tabId === req.input.tabId
+      );
+      const deletedMessage = filteredMessages.pop(); //doesn't need checking if length >0
+      eventEmitter.emit("delete-message", deletedMessage);
+    }),
   setNickname: t.procedure
     .input(z.object({ tabId: z.string(), nickname: z.string() }))
     .mutation((req) => {
