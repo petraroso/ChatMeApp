@@ -8,7 +8,7 @@ const eventEmitter = new EventEmitter();
 const Message = z.object({
   id: z.number(),
   text: z.string(),
-  tabId: z.string(),
+  tabId: z.string(), //can be changed to userId
 });
 export type Message = z.infer<typeof Message>;
 const Messages = z.array(Message);
@@ -17,7 +17,7 @@ let messages: Message[] = [
 ]; //list of all messages
 
 const Nickname = z.object({
-  userId: z.number(),
+  tabId: z.string(),
   nickname: z.string(),
 });
 export type Nickname = z.infer<typeof Nickname>;
@@ -45,11 +45,11 @@ export const appRouter = t.router({
     eventEmitter.emit("delete-message", deletedMessage);
   }),
   setNickname: t.procedure
-    .input(z.object({ userId: z.number(), nickname: z.string() }))
+    .input(z.object({ tabId: z.string(), nickname: z.string() }))
     .mutation((req) => {
-      const { userId, nickname } = req.input;
-      nicknames[userId] = { userId, nickname };
-      eventEmitter.emit("new-nickname", nicknames[userId]); // emitting new nickname
+      const { tabId, nickname } = req.input;
+      nicknames[tabId] = { tabId, nickname };
+      eventEmitter.emit("new-nickname", nicknames[tabId]); // emitting new nickname
     }),
   onUpdate: t.procedure.subscription(() => {
     //listening for events

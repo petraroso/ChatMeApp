@@ -7,9 +7,6 @@ function SendMessage({ tabId }: { tabId: string }) {
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setText(event.target.value);
   };
-  function makeUserId() {
-    return Math.floor(Math.random() * 10000);
-  }
 
   const sendData = () => {
     //if it's not all just spaces
@@ -19,7 +16,7 @@ function SendMessage({ tabId }: { tabId: string }) {
     } else if (text.trim().startsWith("/nick")) {
       let nick = text.trim().substring(5);
       client.setNickname.mutate({
-        userId: makeUserId(),
+        tabId: tabId,
         nickname: nick.trim(),
       });
       setText("");
