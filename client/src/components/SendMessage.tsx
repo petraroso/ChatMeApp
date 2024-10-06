@@ -15,13 +15,24 @@ function SendMessage({ tabId }: { tabId: string }) {
       setText("");
     } else if (text.trim().startsWith("/nick")) {
       let nick = text.trim().substring(5);
-      client.setNickname.mutate({
-        tabId: tabId,
-        nickname: nick.trim(),
-      });
-      setText("");
+      if (nick) {
+        client.setNickname.mutate({
+          tabId: tabId,
+          nickname: nick.trim(),
+        });
+        setText("");
+      }
+    } else if (text.trim().startsWith("/think")) {
+      if (text.trim().substring(6)) {
+        client.sendMessage.mutate({
+          text: text.trim().substring(6),
+          tabId,
+          differentStyling: "different",
+        });
+        setText("");
+      }
     } else if (text.trim()) {
-      client.sendMessage.mutate({ text, tabId });
+      client.sendMessage.mutate({ text, tabId, differentStyling: "default" });
       setText("");
     }
   };

@@ -9,11 +9,17 @@ const Message = z.object({
   id: z.number(),
   text: z.string(),
   tabId: z.string(), //can be changed to userId
+  differentStyling: z.string(),
 });
 export type Message = z.infer<typeof Message>;
 const Messages = z.array(Message);
 let messages: Message[] = [
-  { id: 736, text: "Inicijalna poruka", tabId: "default" },
+  {
+    id: 736,
+    text: "Inicijalna poruka",
+    tabId: "default",
+    differentStyling: "default",
+  },
 ]; //list of all messages
 
 const Nickname = z.object({
@@ -29,12 +35,19 @@ export const appRouter = t.router({
     return messages;
   }),
   sendMessage: t.procedure
-    .input(z.object({ text: z.string(), tabId: z.string() }))
+    .input(
+      z.object({
+        text: z.string(),
+        tabId: z.string(),
+        differentStyling: z.string(),
+      })
+    )
     .mutation((req) => {
       const newMsg: Message = {
         id: Date.now(),
         text: req.input.text,
         tabId: req.input.tabId,
+        differentStyling: req.input.differentStyling,
       };
       messages.push(newMsg);
       eventEmitter.emit("new-message", newMsg); //emitting new message
