@@ -13,20 +13,22 @@ function App() {
 
   useEffect(() => {
     const subscription = client.onUpdate.subscribe(undefined, {
-      onData: ({ type, message }) => {
+      onData: ({ type, message, nickname }) => {
         //when new data comes
-        if (type === "new") {
+        if (type === "new" && message) {
           setMessages((prevMessages) =>
             prevMessages ? [...prevMessages, message] : [message]
           );
-        } else if (type === "delete") {
+        } else if (type === "delete" && message) {
           setMessages((prevMessages) =>
             prevMessages?.filter((msg) => msg.id !== message.id)
           );
+        } else if (type === "nickname" && nickname) {
+          document.title = `${nickname.nickname}`; //update browser tab title
         }
       },
     });
-    //when component unmounts:
+    //when component unmounts
     return () => {
       subscription.unsubscribe();
     };
