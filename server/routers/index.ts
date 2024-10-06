@@ -8,10 +8,13 @@ const eventEmitter = new EventEmitter();
 const Message = z.object({
   id: z.number(),
   text: z.string(),
+  tabId: z.string(),
 });
 export type Message = z.infer<typeof Message>;
 const Messages = z.array(Message);
-let messages: Message[] = [{ id: 736, text: "Inicijalna poruka" }]; //list of all messages
+let messages: Message[] = [
+  { id: 736, text: "Inicijalna poruka", tabId: "default" },
+]; //list of all messages
 
 const Nickname = z.object({
   userId: z.number(),
@@ -26,9 +29,13 @@ export const appRouter = t.router({
     return messages;
   }),
   sendMessage: t.procedure
-    .input(z.object({ text: z.string() }))
+    .input(z.object({ text: z.string(), tabId: z.string() }))
     .mutation((req) => {
-      const newMsg: Message = { id: Date.now(), text: req.input.text };
+      const newMsg: Message = {
+        id: Date.now(),
+        text: req.input.text,
+        tabId: req.input.tabId,
+      };
       messages.push(newMsg);
       eventEmitter.emit("new-message", newMsg); //emitting new message
       return newMsg;

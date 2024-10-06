@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { client } from "../client";
 
-function SendMessage() {
+function SendMessage({ tabId }: { tabId: string }) {
   const [text, setText] = useState("");
 
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +24,7 @@ function SendMessage() {
       });
       setText("");
     } else if (text.trim()) {
-      client.sendMessage.mutate({ text });
+      client.sendMessage.mutate({ text, tabId });
       setText("");
     }
   };

@@ -4,8 +4,18 @@ import type { Message } from "../../server/routers";
 import MessageBoard from "./components/MessageBoard";
 import SendMessage from "./components/SendMessage";
 
+function getTabId() {
+  let tabId = sessionStorage.getItem("tabId");
+  if (!tabId) {
+    tabId = `tab-${Math.random().toString(36).substr(2, 9)}`;
+    sessionStorage.setItem("tabId", tabId);
+  }
+  return tabId;
+}
+
 function App() {
   const [messages, setMessages] = useState<Message[] | undefined>(undefined);
+  const tabId = getTabId();
 
   useEffect(() => {
     fetchMessages();
@@ -42,7 +52,7 @@ function App() {
   return (
     <>
       <MessageBoard messages={messages} />
-      <SendMessage />
+      <SendMessage tabId={tabId} />
     </>
   );
 }

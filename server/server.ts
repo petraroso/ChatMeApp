@@ -13,10 +13,26 @@ const server = app.listen(3000, () => {
   console.log("Server pokrenut na portu 3000");
 });
 
+const wss = new ws.Server({ server });
+
 applyWSSHandler({
   //allows websocket connections to trpc
-  wss: new ws.Server({ server }), //web socket server
+  wss, //web socket server
   router: appRouter,
+});
+
+wss.on("connection", (ws, req) => {
+  const params = new URL(req.url!, "http://localhost").searchParams;
+  const tabId = params.get("tabId"); // Extract the tabId
+
+  ws.on("message", (message) => {
+    // Handle incoming messages with tabId
+    console.log(`Message from tabId ${tabId}:`, message);
+  });
+
+  ws.on("close", () => {
+    console.log(`Connection closed for tabId ${tabId}`);
+  });
 });
 
 export type AppRouter = typeof appRouter;
