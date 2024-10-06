@@ -13,12 +13,20 @@ function getTabId() {
   return tabId;
 }
 
+function getDocumentTitle() {
+  let docTitle = sessionStorage.getItem("documentTitle");
+  if (docTitle) {
+    document.title = `${docTitle}`;
+  } else document.title = `ChatMeApp`;
+}
+
 function App() {
   const [messages, setMessages] = useState<Message[] | undefined>(undefined);
   const tabId = getTabId();
 
   useEffect(() => {
     fetchMessages();
+    getDocumentTitle();
   }, []);
 
   useEffect(() => {
@@ -34,7 +42,10 @@ function App() {
             prevMessages?.filter((msg) => msg.id !== message.id)
           );
         } else if (type === "nickname" && nickname) {
-          document.title = `${nickname.nickname}`; //update browser tab title
+          if (nickname.tabId != tabId) {
+            document.title = `${nickname.nickname}`; //update browser tab title
+            sessionStorage.setItem("documentTitle", nickname.nickname);
+          }
         }
       },
     });
