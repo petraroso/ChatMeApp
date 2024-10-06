@@ -43,11 +43,17 @@ export const appRouter = t.router({
   deleteMessage: t.procedure
     .input(z.object({ tabId: z.string() }))
     .mutation((req) => {
-      const filteredMessages = messages.filter(
-        (msg) => msg.tabId === req.input.tabId
-      );
-      const deletedMessage = filteredMessages.pop(); //doesn't need checking if length >0
-      eventEmitter.emit("delete-message", deletedMessage);
+      const reversedIndex = messages
+        .slice()
+        .reverse()
+        .findIndex((msg) => msg.tabId === req.input.tabId);
+      const messageIndex =
+        reversedIndex === -1 ? -1 : messages.length - 1 - reversedIndex;
+      if (messageIndex !== -1) {
+        // Ukloni tu poruku iz niza
+        const deletedMessage = messages.splice(messageIndex, 1)[0]; // Ukloni poruku s tog indeksa
+        eventEmitter.emit("delete-message", deletedMessage);
+      }
     }),
   setNickname: t.procedure
     .input(z.object({ tabId: z.string(), nickname: z.string() }))
