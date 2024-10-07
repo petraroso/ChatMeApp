@@ -8,7 +8,7 @@ function getTabId() {
   let tabId = sessionStorage.getItem("tabId");
   let nicknameColorClass = sessionStorage.getItem("textColorClass");
   if (!tabId || !nicknameColorClass) {
-    tabId = `tab-${Math.random().toString(36).substr(2, 9)}`;
+    tabId = `tab-${Math.random().toString(36).substring(2, 9)}`;
     nicknameColorClass =
       nicknameColors[Math.floor(Math.random() * nicknameColors.length)];
     sessionStorage.setItem("tabId", tabId);
