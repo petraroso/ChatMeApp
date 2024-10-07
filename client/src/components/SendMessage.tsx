@@ -37,6 +37,12 @@ function SendMessage({ tabId }: { tabId: string }) {
     }
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      sendData();
+    }
+  };
+
   return (
     <div className="p-4 bg-gray-100 rounded-md shadow-md">
       <div className="flex space-x-4">
@@ -48,6 +54,7 @@ function SendMessage({ tabId }: { tabId: string }) {
           placeholder="Pošaljite poruku"
           value={text}
           onChange={handleTextChange}
+          onKeyDown={handleKeyDown}
           className="flex-grow p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-400"
         />
         <button
