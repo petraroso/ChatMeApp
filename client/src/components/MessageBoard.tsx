@@ -13,7 +13,9 @@ function MessageBoard({ messages }: MessageBoardProps) {
               key={idx}
               className="p-4 mb-4 bg-gray-300 rounded-md shadow-md max-w-fit"
             >
-              <h4 className="font-bold">Poruka od: {msg.tabId}</h4>
+              <h4 className={`font-bold ${msg.nicknameColor}`}>
+                Poruka od: {msg.tabId}
+              </h4>
               <div>{msg.text}</div>
             </div>
           ) : (
@@ -21,7 +23,9 @@ function MessageBoard({ messages }: MessageBoardProps) {
               key={idx}
               className="p-4 mb-4 bg-gray-100 rounded-md shadow-md max-w-fit"
             >
-              <h4 className="font-bold">Poruka od: {msg.tabId}</h4>
+              <h4 className={`font-bold ${msg.nicknameColor}`}>
+                Poruka od: {msg.tabId}
+              </h4>
               <div>{msg.text}</div>
             </div>
           )

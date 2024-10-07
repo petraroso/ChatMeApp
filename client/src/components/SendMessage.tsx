@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { client } from "../client";
 
-function SendMessage({ tabId }: { tabId: string }) {
+interface SendMessageProps {
+  tabId: string;
+  nicknameColorClass: string; // Dodaj ovu liniju
+}
+
+function SendMessage({ tabId, nicknameColorClass }: SendMessageProps) {
   const [text, setText] = useState("");
 
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,11 +33,17 @@ function SendMessage({ tabId }: { tabId: string }) {
           text: text.trim().substring(6),
           tabId,
           differentStyling: "different",
+          nicknameColor: nicknameColorClass,
         });
         setText("");
       }
     } else if (text.trim()) {
-      client.sendMessage.mutate({ text, tabId, differentStyling: "default" });
+      client.sendMessage.mutate({
+        text,
+        tabId,
+        differentStyling: "default",
+        nicknameColor: nicknameColorClass,
+      });
       setText("");
     }
   };

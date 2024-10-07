@@ -6,11 +6,15 @@ import SendMessage from "./components/SendMessage";
 
 function getTabId() {
   let tabId = sessionStorage.getItem("tabId");
-  if (!tabId) {
+  let nicknameColorClass = sessionStorage.getItem("textColorClass");
+  if (!tabId || !nicknameColorClass) {
     tabId = `tab-${Math.random().toString(36).substr(2, 9)}`;
+    nicknameColorClass =
+      nicknameColors[Math.floor(Math.random() * nicknameColors.length)];
     sessionStorage.setItem("tabId", tabId);
+    sessionStorage.setItem("textColorClass", nicknameColorClass);
   }
-  return tabId;
+  return { tabId, nicknameColorClass };
 }
 
 function getDocumentTitle() {
@@ -20,9 +24,20 @@ function getDocumentTitle() {
   } else document.title = `ChatMeApp`;
 }
 
+const nicknameColors = [
+  "text-red-600",
+  "text-blue-600",
+  "text-green-600",
+  "text-yellow-600",
+  "text-purple-600",
+  "text-pink-600",
+  "text-indigo-600",
+  "text-teal-600",
+];
+
 function App() {
   const [messages, setMessages] = useState<Message[] | undefined>(undefined);
-  const tabId = getTabId();
+  const { tabId, nicknameColorClass } = getTabId();
 
   useEffect(() => {
     fetchMessages();
@@ -66,7 +81,7 @@ function App() {
         <MessageBoard messages={messages} />
       </div>
       <div className="p-4 sticky bottom-0 bg-white">
-        <SendMessage tabId={tabId} />
+        <SendMessage tabId={tabId} nicknameColorClass={nicknameColorClass} />
       </div>
     </div>
   );

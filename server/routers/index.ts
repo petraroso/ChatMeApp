@@ -10,6 +10,7 @@ const Message = z.object({
   text: z.string(),
   tabId: z.string(), //can be changed to userId
   differentStyling: z.string(),
+  nicknameColor: z.string(),
 });
 export type Message = z.infer<typeof Message>;
 const Messages = z.array(Message);
@@ -19,6 +20,7 @@ let messages: Message[] = [
     text: "Inicijalna poruka",
     tabId: "default",
     differentStyling: "default",
+    nicknameColor: "text-blue-600",
   },
 ]; //list of all messages
 
@@ -40,6 +42,7 @@ export const appRouter = t.router({
         text: z.string(),
         tabId: z.string(),
         differentStyling: z.string(),
+        nicknameColor: z.string(),
       })
     )
     .mutation((req) => {
@@ -48,6 +51,7 @@ export const appRouter = t.router({
         text: req.input.text,
         tabId: req.input.tabId,
         differentStyling: req.input.differentStyling,
+        nicknameColor: req.input.nicknameColor,
       };
       messages.push(newMsg);
       eventEmitter.emit("new-message", newMsg); //emitting new message
