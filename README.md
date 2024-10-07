@@ -21,9 +21,9 @@ npm run dev<br/>
 
 - Second terminal:
 
-cd server
-npm install
-npm start
+cd server<br/>
+npm install<br/>
+npm start<br/>
 
 - Open 2 or more browser tabs on address: http://localhost:5173/
 
