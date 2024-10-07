@@ -17,9 +17,9 @@ const Messages = z.array(Message);
 let messages: Message[] = [
   {
     id: 736,
-    text: "Inicijalna poruka",
-    tabId: "default",
-    differentStyling: "default",
+    text: "Dobrodošli u ChatMeApp!",
+    tabId: "ChatMeApp",
+    differentStyling: "different",
     nicknameColor: "text-blue-600",
   },
 ]; //list of all messages

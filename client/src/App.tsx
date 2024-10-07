@@ -46,7 +46,7 @@ function App() {
   }
 
   return (
-    <div className="flex flex-col h-screen  sm:p-0 md:p-4 lg:mx-36">
+    <div className="flex flex-col h-screen sm:p-0 md:p-4 lg:mx-36">
       <div className="flex-grow">
         <MessageBoard messages={messages} />
       </div>
