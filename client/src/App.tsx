@@ -27,7 +27,7 @@ function App() {
             prevMessages?.filter((msg) => msg.id !== message.id)
           );
         } else if (type === "nickname" && nickname) {
-          if (nickname.tabId != tabId) {
+          if (nickname.tabId !== tabId) {
             document.title = `${nickname.nickname}`; //update browser tab title
             sessionStorage.setItem("documentTitle", nickname.nickname);
           }
@@ -38,7 +38,7 @@ function App() {
     return () => {
       subscription.unsubscribe();
     };
-  }, []);
+  }, [tabId]);
 
   async function fetchMessages() {
     const result = await client.getAllMessages.query();
