@@ -65,7 +65,7 @@ function App() {
       <div className="flex-grow">
         <MessageBoard messages={messages} />
       </div>
-      <div className="p-4 sticky bottom-0 ">
+      <div className="p-4 sticky bottom-0 bg-white">
         <SendMessage tabId={tabId} />
       </div>
     </div>
