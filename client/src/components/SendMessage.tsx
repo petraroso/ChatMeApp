@@ -38,18 +38,25 @@ function SendMessage({ tabId }: { tabId: string }) {
   };
 
   return (
-    <div>
-      <label htmlFor="text">Poruka:</label>
-      <input
-        type="text"
-        id="text"
-        name="text"
-        autoComplete="off"
-        placeholder="Pošaljite poruku"
-        value={text}
-        onChange={handleTextChange}
-      ></input>
-      <button onClick={sendData}>Pošaljite</button>
+    <div className="p-4 bg-gray-100 rounded-md shadow-md">
+      <div className="flex space-x-4">
+        <input
+          type="text"
+          id="text"
+          name="text"
+          autoComplete="off"
+          placeholder="Pošaljite poruku"
+          value={text}
+          onChange={handleTextChange}
+          className="flex-grow p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-400"
+        />
+        <button
+          onClick={sendData}
+          className="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out"
+        >
+          Pošaljite
+        </button>
+      </div>
     </div>
   );
 }

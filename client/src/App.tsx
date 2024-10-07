@@ -61,10 +61,14 @@ function App() {
   }
 
   return (
-    <>
-      <MessageBoard messages={messages} />
-      <SendMessage tabId={tabId} />
-    </>
+    <div className="flex flex-col h-screen p-4 lg:mx-36">
+      <div className="flex-grow">
+        <MessageBoard messages={messages} />
+      </div>
+      <div className="p-4 sticky bottom-0 ">
+        <SendMessage tabId={tabId} />
+      </div>
+    </div>
   );
 }
 
