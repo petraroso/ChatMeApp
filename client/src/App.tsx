@@ -3,8 +3,7 @@ import { useState, useEffect } from "react";
 import type { Message } from "../../server/routers";
 import MessageBoard from "./components/MessageBoard";
 import SendMessage from "./components/SendMessage";
-import { getTabId, getDocumentTitle} from "./utils/setup";
-
+import { getTabId, getDocumentTitle } from "./utils/setup";
 
 function App() {
   const [messages, setMessages] = useState<Message[] | undefined>(undefined);
@@ -47,7 +46,7 @@ function App() {
   }
 
   return (
-    <div className="flex flex-col h-screen p-4 lg:mx-36">
+    <div className="flex flex-col h-screen  sm:p-0 md:p-4 lg:mx-36">
       <div className="flex-grow">
         <MessageBoard messages={messages} />
       </div>
